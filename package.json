@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/app.js",
+    "dev": "nodemon app.js",
     "knex": "knex",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
-    "start": "node src/app.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
