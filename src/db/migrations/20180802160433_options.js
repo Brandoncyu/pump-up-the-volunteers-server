@@ -1,11 +1,12 @@
+const table = 'options'
 exports.up = knex => {
-    return knex.schema.createTable('options', table => {
-        // What is table.increments()? create id
+    return knex.schema.createTable(table, table => {
         table.increments()
+        table.string('categoryId').notNullable()
         table.string('name').notNullable()
     })
 };
 
 exports.down = knex => {
-    return knex.schema.dropTable('options')
+    return knex.schema.dropTable(table)
 };
