@@ -1,5 +1,6 @@
-exports.up = function (knex, Promise) {
-    return knex.schema.createTable('volunteers_options', table => {
+const table = 'volunteers_options'
+exports.up = knex => {
+    return knex.schema.createTable(table, table => {
         table.increments()
         table.integer('user_id').notNullable().defaultsTo(0)
         table.integer('option_id').notNullable().defaultsTo(0)
@@ -9,5 +10,5 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('volunteers_options')
+    return knex.schema.dropTable(table)
 };

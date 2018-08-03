@@ -1,5 +1,6 @@
+const table = 'address'
 exports.up = knex => {
-    return knex.schema.createTable('address', table => {
+    return knex.schema.createTable(table, table => {
         table.increments()
         table.string('address_line1').notNullable()
         table.string('address_line2').notNullable()
@@ -15,5 +16,5 @@ exports.up = knex => {
 };
 
 exports.down = knex => {
-    return knex.schema.dropTable('address')
+    return knex.schema.dropTable(table)
 };
