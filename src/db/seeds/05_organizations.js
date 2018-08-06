@@ -11,7 +11,8 @@ exports.seed = knex => {
         name: 'SOUND MENTAL HEALTH',
         email: 'stephen.mclean@sound.health',
         password: hashSync('password'),
-        ein: 910818971
+        ein: 910818971,
+        
       },
       {
         id: 2,
