@@ -1,6 +1,6 @@
 const {SECRET_KEY} = process.env
 const {sign, verify} = require('jsonwebtoken')
-const db = require('../db')
+const db = require('../db/knex')
 
 function createToken(id) {
   const sub = {
@@ -14,6 +14,7 @@ function createToken(id) {
 
   return sign(sub, SECRET_KEY, options)
 }
+// all tokens are signed with a unique id. 
 
 function parseToken(header) {
   const token = header && header.split('Bearer ')[1]
