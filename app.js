@@ -2,29 +2,44 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const cors = require('cors')
-const port = process.env.PORT || 3000
-
 const app = express()
-app.use(morgan('dev'))
-app.use(bodyParser.json())
+const { PORT = 5000, NODE_ENV = 'development' } = process.env
 
+if (NODE_ENV === 'development') {
+  require('dotenv').load()
+  app.use(morgan('dev'))
+}
+
+app.use(bodyParser.json())
 app.use(cors())
 
+app.use('/api/volunteers', require('./routes/volunteers'))
+app.use('/api/organizations', require('./routes/organizations'))
+
+// Fix this part to include events 
+app.use('/api/lists', require('./routes/lists'))
+app.use('/api/lists/:listId/tasks', require('./routes/tasks'))
+
+
 app.use((err, req, res, next) => {
-  console.error(err)
-  const status = err.status || 500
-  res.status(status).json({error: err})
+  if (NODE_ENV === 'development') console.error(err)
+
+  const message = `Something went wrong.`
+  const { status = 500, error = message } = err
+
+  res.status(status).json({ status, error })
 })
 
 app.use((req, res, next) => {
-  res.status(404).json({
-    error: {
-      message: 'Not found'
-    }
-  })
+  const status = 404
+  const error = `Could not ${req.method} ${req.url}`
+
+  next({ status, error })
 })
 
-const listener = () => console.log(`Listening on port ${port}!`)
-app.listen(port, listener)
+if (NODE_ENV !== 'testing') {
+  const listener = () => console.log(`Listening on port ${PORT}!`)
+  app.listen(PORT, listener)
+}
 
 module.exports = app
