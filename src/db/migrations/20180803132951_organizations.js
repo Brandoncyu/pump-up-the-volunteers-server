@@ -10,6 +10,7 @@ exports.up = knex => {
     table.string('logo').notNullable()
     table.string('street')
     table.string('city')
+    table.string('state')
     table.string('zipCode')
     table.string('latitude')
     table.string('longitude')
