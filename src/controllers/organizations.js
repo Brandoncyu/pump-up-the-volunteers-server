@@ -8,7 +8,7 @@ async function signup(req, res, next) {
     const token = auth.createToken(response.id)
 
     res.status(201).json({
-      token
+      token_org: token
     })
   } catch (e) {
     next({
