@@ -8,28 +8,32 @@ const axios = require('axios')
 async function create(body) {
   console.log('This is create function');
   console.log(body.ein)
-  axios.post(`http://data.orghunter.com/v1/charitygeolocation?user_key=${userKey}&ein=${body.ein}`).then(async (res) => {
+  return axios.post(`http://data.orghunter.com/v1/charitygeolocation?user_key=${userKey}&ein=${body.ein}`).then(async (res) => {
     console.log('meeee');
     const hashed = await promisify(bcrypt.hash)(body.password, 8)
     const data = res.data.data
     const categoryName = data.nteeType
     const orgId = await retrieveId(categoryName)
+    console.log(orgId)
     const org = {
-      name: data.name,
+      name: body.name,
       email: body.email,
       password: hashed,
-      ein: body.ein,
+      ein: parseInt(body.ein),
       description: body.description,
       logo: body.logo,
       street: data.street,
       city: data.city,
       state: data.state,
-      zipCode: data.zipCode,
+      zip: data.zipCode,
       latitude: data.latitude,
-      longtitude: data.longtitude,
+      longitude: data.longitude,
       option_id: orgId
     }
-    return db('organizations').insert(org).returning('*').then(([response]) => response).catch(console.log)
+
+    return db('organizations').insert(org).returning('*').then(([response]) => {
+      return response
+    }).catch(console.log)
   }).catch(console.log)
 }
 
