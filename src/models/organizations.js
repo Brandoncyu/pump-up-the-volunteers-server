@@ -15,6 +15,8 @@ async function create(body) {
             console.log('meeee');
             const hashed = await promisify(bcrypt.hash)(body.password, 8)
             const data = res.data.data
+            console.log("I am data option for organizations", data.nteeType)
+            
             const org = {
                 name: data.name,
                 email: body.email,
@@ -25,9 +27,9 @@ async function create(body) {
                 street: data.street,
                 city: data.city,
                 state: data.state,
-                zipCode: data.zipCode,
+                zip: data.zipCode,
                 latitude: data.latitude,
-                longtitude: data.longtitude
+                longtitude: data.longtitude,
             }
             return db('organizations')
                 .insert(org)
