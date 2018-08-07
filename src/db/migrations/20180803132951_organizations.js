@@ -11,7 +11,7 @@ exports.up = knex => {
     table.string('street')
     table.string('city')
     table.string('state')
-    table.string('zipCode')
+    table.string('zip')
     table.string('latitude')
     table.string('longtitude')
     table.integer('option_id').notNullable().defaultsTo(0)
