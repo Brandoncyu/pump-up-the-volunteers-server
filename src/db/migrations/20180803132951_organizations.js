@@ -5,7 +5,7 @@ exports.up = knex => {
     table.string('name').notNullable()
     table.string('email').notNullable().unique()
     table.text('password').notNullable()
-    table.integer('ein').notNullable().unique()
+    table.string('ein').notNullable().unique()
     table.string('description').notNullable()
     table.string('logo').notNullable()
     table.string('street')

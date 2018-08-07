@@ -17,12 +17,8 @@ app.use(cors())
 
 app.use('/api/volunteers', require('./src/routes/volunteers'))
 app.use('/api/organizations', require('./src/routes/organizations'))
-// app.use('/api/organizations/events', require('./src/routes/events_org.js'))
+app.use('/api/organizations/events', require('./src/routes/events_org.js'))
 // app.use('/api/volunteers/events', require('.src/routes/events_vol.js'))
-
-// Fix this part to include events ???
-// app.use('/api/volunteers/events', require('./routes/events'))
-// app.use('/api/organizations/events', require('./routes/events'))
 
 app.use((err, req, res, next) => {
   if (NODE_ENV === 'development') console.error(err)
