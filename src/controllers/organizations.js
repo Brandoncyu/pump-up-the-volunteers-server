@@ -5,11 +5,12 @@ async function signup(req, res, next) {
   console.log("this is signup inside controller")
   try {
     const response = await model.create(req.body)
+    console.log(response)
     const token = auth.createToken(response.id)
 
     res.status(201).json({token})
   } catch (e) {
-    next({status: 400, error: `Volunteer could not be registered`})
+    next({status: 400, error: `Organization could not be registered`})
   }
 }
 
