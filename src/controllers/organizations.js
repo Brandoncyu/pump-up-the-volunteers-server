@@ -7,14 +7,9 @@ async function signup(req, res, next) {
     const response = await model.create(req.body)
     const token = auth.createToken(response.id)
 
-    res.status(201).json({
-      token_org: token
-    })
+    res.status(201).json({token})
   } catch (e) {
-    next({
-      status: 400,
-      error: `Volunteer could not be registered`
-    })
+    next({status: 400, error: `Volunteer could not be registered`})
   }
 }
 
@@ -23,14 +18,9 @@ async function login(req, res, next) {
     const response = await model.login(req.body)
     const token = auth.createToken(response.id)
 
-    res.json({
-      token_org: token
-    })
+    res.json({token})
   } catch (e) {
-    next({
-      status: 401,
-      error: `Email or password is incorrect`
-    })
+    next({status: 401, error: `Email or password is incorrect`})
   }
 }
 
