@@ -13,14 +13,16 @@ function popOptions(interests, userId) {
     let option = {
         user_id: userId
     }
-
-    interests.map(el => {
+    interests.forEach(el => {
         option.option_id = el
         console.log("I am the option", option)
         return db('volunteers_options')
             .insert(option)
             .returning('*')
-            .then(([response]) => response)
+            .then(([response]) => {
+                console.log("Response inside popOptions function", response)
+                return response
+            })
             .catch(console.log)
     })
 }
