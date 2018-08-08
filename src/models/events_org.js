@@ -67,6 +67,7 @@ function find(id) {
 function patch(id, body) {
     return find(id).then(response => {
         if (body.date) {
+            const date = body.date
             return db('events')
                 .update({
                     ...response,
