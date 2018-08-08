@@ -6,6 +6,7 @@ const {
     parseToken
 } = require('../lib/auth')
 
+
 const resourceName = 'event'
 
 async function index(req, res, next) {
@@ -15,6 +16,7 @@ async function index(req, res, next) {
     const days = req.query.days
     const categories = req.query.vol_opt
     const response = await model.get(days, categories)
+
     res.json({
         [plural(resourceName)]: response
     })
@@ -31,4 +33,5 @@ async function patch(req, res, next) {
 
 module.exports = {
     index
+
 }

@@ -16,4 +16,5 @@ function get(days, categories) {
 
 module.exports = {
     get
+
 }

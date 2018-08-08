@@ -19,15 +19,13 @@ async function index(req, res, next) {
 
 async function create(req, res, next) {
     try {
-        // const token = parseToken(req.headers.authorization)
-        const orgId = req.params.orgId
+        const token = parseToken(req.headers.authorization)
+        const orgId = token.sub.id
+        req.body.org_id = orgId
+        console.log("I am req.body",req.body)
+        const response = await model.create(req.body)
 
-        console.log("I am req.params YAYY", req.params)
-
-        const response = await model.create({ ...req.body,
-            org_id: orgId
-        })
-
+        // res.status(201).json({message: `I'm Working`})
         res.status(201).json({
             [resourceName]: response
         })
@@ -40,19 +38,26 @@ async function create(req, res, next) {
     }
 }
 
-
 async function patch(req, res, next) {
-    const id = req.params.id
-    console.log("req.params in patch YY",req.params)
-    const response = await model.patch(id, req.body)
-    res.json({
-        [resourceName]: response
-    })
+
+    try {
+        const id = req.params.id
+        const response = await model.patch(id, req.body)
+        res.json({
+            [resourceName]: response
+        })
+    } catch (e) {
+        console.log('!!!!', e)
+        next({
+            status: 400,
+            error: `Event could not be updated`
+        })
+    }
+
 }
 
 async function destroy(req, res, next) {
     try {
-
         const id = req.params.id
         console.log("I am an id", id)
         const response = await model.destroy(id)
