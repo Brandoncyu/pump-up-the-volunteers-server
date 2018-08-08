@@ -25,7 +25,7 @@ function get(orgId) {
 
 function dateObj(n) {
     let
-        parts = n.split('/'),
+        parts = n.split('-'),
         year = parseInt(parts[2], 10),
         month = parseInt(parts[0], 10) - 1, // NB: month is zero-based!
         day = parseInt(parts[1], 10),
