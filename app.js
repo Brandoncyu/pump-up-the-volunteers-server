@@ -18,7 +18,7 @@ app.use(cors())
 app.use('/api/volunteers', require('./src/routes/volunteers'))
 app.use('/api/organizations', require('./src/routes/organizations'))
 app.use('/api/organizations/:orgId/events', require('./src/routes/events_org.js'))
-// app.use('/api/volunteers/:volId/events', require('./src/routes/events_vol.js'))
+app.use('/api/volunteers/:volId/events', require('./src/routes/events_vol.js'))
 
 app.use((err, req, res, next) => {
   if (NODE_ENV === 'development') console.error(err)

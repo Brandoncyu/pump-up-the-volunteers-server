@@ -30,6 +30,7 @@ async function create(req, res, next) {
             [resourceName]: response
         })
     } catch (e) {
+        console.log(e)
         next({
             status: 400,
             error: `Event could not be created`
@@ -38,6 +39,7 @@ async function create(req, res, next) {
 }
 
 async function patch(req, res, next) {
+
     try {
         const id = req.params.id
         const response = await model.patch(id, req.body)
@@ -51,6 +53,7 @@ async function patch(req, res, next) {
             error: `Event could not be updated`
         })
     }
+
 }
 
 async function destroy(req, res, next) {
