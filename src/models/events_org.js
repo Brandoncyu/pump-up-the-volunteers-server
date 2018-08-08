@@ -21,9 +21,37 @@ function get(orgId) {
 
 
 // check the route. 
+
+
+function dateObj(n) {
+    let
+        parts = n.split('/'),
+        year = parseInt(parts[2], 10),
+        month = parseInt(parts[0], 10) - 1, // NB: month is zero-based!
+        day = parseInt(parts[1], 10),
+        date = new Date(year, month, day);
+
+    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    const result = days[date.getDay()]
+    let daysObj = {}
+    daysObj[result] = true
+    const notSelected = days.filter(el => el !== result)
+    notSelected.map(el => {
+        return daysObj[el] = false
+    })
+    return daysObj
+}
+
 function create(body) {
+    const date = body.date
+    console.log(date)
+    const bodyInsert = {
+        ...body,
+        ...dateObj(date)
+    }
     return db('events')
-        .insert(body)
+        .insert(bodyInsert)
         .returning('*')
         .then(([response]) => response)
 }
@@ -31,24 +59,39 @@ function create(body) {
 
 function find(id) {
     return db('events')
-    .where({
-        id
-    }).first()
+        .where({
+            id
+        }).first()
 }
 
 function patch(id, body) {
     return find(id).then(response => {
-        return db('events')
-            .update({
-                ...response,
-                ...body,
-                updated_at: new Date()
-            })
-            .where({
-                id
-            })
-            .returning('*')
-            .then(([response]) => response)
+        if (body.date) {
+            return db('events')
+                .update({
+                    ...response,
+                    ...body,
+                    ...dateObj(date),
+                    updated_at: new Date()
+                })
+                .where({
+                    id
+                })
+                .returning('*')
+                .then(([response]) => response)
+        } else {
+            return db('events')
+                .update({
+                    ...response,
+                    ...body,
+                    updated_at: new Date()
+                })
+                .where({
+                    id
+                })
+                .returning('*')
+                .then(([response]) => response)
+        }
     })
 }
 
