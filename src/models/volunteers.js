@@ -60,7 +60,12 @@ function login({email, password}) {
   }).catch(console.log)
 }
 
+function interestFinder(vol_id) {
+  return db('volunteers_options').where({vol_id}).then(response => response).catch(console.log)
+}
+
 module.exports = {
   create,
-  login
+  login,
+  interestFinder
 }
