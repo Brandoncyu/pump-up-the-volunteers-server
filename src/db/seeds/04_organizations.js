@@ -11,7 +11,7 @@ exports.seed = knex => {
       password: hashSync('password'),
       ein: 911626784,
       description: "Music and more",
-      logo: 'https://goo.gl/G1FHJB',
+      logo: 'http://scoop.previewsworld.com/Image/NewsImage/4/202621/1157629/1',
       street: "120 6TH AVE N STE 100",
       city: "SEATTLE",
       state: "WA",
