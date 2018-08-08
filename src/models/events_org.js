@@ -61,6 +61,7 @@ function patch(id, body) {
   return find(id).then(response => {
     if (body.date) {
       const date = body.date
+      console.log("I am date in patch", date)
       return db('events').update({
         ...response,
         ...body,
