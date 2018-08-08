@@ -14,7 +14,6 @@ async function create(body) {
     const data = res.data.data
     const categoryName = data.nteeType
     const orgId = await retrieveId(categoryName)
-    console.log(orgId)
     const org = {
       name: body.name,
       email: body.email,
