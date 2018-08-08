@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs')
 function popOptions(interests, userId) {
   interests.forEach(el => {
     let option = {
-      user_id: userId,
+      vol_id: userId,
       option_id: el
     }
     console.log("I am the option", option)
@@ -33,7 +33,7 @@ async function create(body) {
     address_line1: body.address1,
     city: body.city,
     state: body.state,
-    zip: body.zip,
+    zip: parseInt(body.zip),
     Sunday: body.days[0],
     Monday: body.days[1],
     Tuesday: body.days[2],
