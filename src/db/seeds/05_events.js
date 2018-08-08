@@ -14,13 +14,7 @@ exports.seed = knex => {
     city: "SEATTLE",
     state: "WA",
     zip: "98109-5002",
-    Sunday: false,
-    Monday: false,
-    Tuesday: false,
-    Wednesday: true,
-    Thursday: false,
-    Friday: false,
-    Saturday: false,
+    day: 'Wednesday',
     org_id: 1
   }, {
     id: 2,
@@ -31,13 +25,7 @@ exports.seed = knex => {
     city: "SEATTLE",
     state: "WA",
     zip: "98109-5002",
-    Sunday: false,
-    Monday: false,
-    Tuesday: false,
-    Wednesday: false,
-    Thursday: true,
-    Friday: false,
-    Saturday: false,
+    day: "Thursday",
     org_id: 1
   }, {
     id: 3,
@@ -48,13 +36,7 @@ exports.seed = knex => {
     city: "SEATTLE",
     state: "WA",
     zip: "98109-5002",
-    Sunday: false,
-    Monday: false,
-    Tuesday: false,
-    Wednesday: true,
-    Thursday: false,
-    Friday: false,
-    Saturday: false,
+    day: "Wednesday",
     org_id: 1
   }]).then(() => {
     return knex.raw(`SELECT setval('${table}_id_seq', (SELECT MAX(id) FROM ${table}));`)
