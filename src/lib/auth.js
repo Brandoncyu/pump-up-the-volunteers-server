@@ -32,7 +32,6 @@ function isLoggedIn(req, res, next) {
 
 async function isAuthorized(req, res, next) {
   try {
-    console.log(req)
     const authorization = req.headers.authorization
     if (!authorization) {
       const message = `You are not authorized to access this route`
