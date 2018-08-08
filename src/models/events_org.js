@@ -37,9 +37,10 @@ function dateObj(n) {
     let daysObj = {}
     daysObj[result] = true
     const notSelected = days.filter(el => el !== result)
-    notSelected.map(el => {
-        return daysObj[el] = false
+    notSelected.forEach(el => {
+        daysObj[el] = false
     })
+    console.log(daysObj)
     return daysObj
 }
 
@@ -50,6 +51,7 @@ function create(body) {
         ...body,
         ...dateObj(date)
     }
+    console.log(bodyInsert)
     return db('events')
         .insert(bodyInsert)
         .returning('*')
