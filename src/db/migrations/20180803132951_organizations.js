@@ -13,7 +13,7 @@ exports.up = knex => {
     table.string('state')
     table.string('zip')
     table.string('latitude')
-    table.string('longtitude')
+    table.string('longitude')
     table.integer('option_id').notNullable().defaultsTo(0)
     table.foreign('option_id').references('options.id').onDelete('CASCADE')
     table.timestamps(true, true)
