@@ -17,7 +17,7 @@ exports.seed = knex => {
       state: "WA",
       zip: "98109-5002",
       latitude: "47.619471",
-      longitude: "-122.344641",
+      longtitude: "-122.344641",
       option_id: 1
     }
   ]).then(() => {

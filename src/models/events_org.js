@@ -6,26 +6,54 @@ function get(orgId) {
             org_id: orgId
         })
         .then(events => {
-            console.log("getAll for org in model", events)
             return events
         })
 }
 
-function find(id) {
-    return db('lists').where({
-        id
-    }).first()
-}
+// function getOne(orgId, id) {
+//     return db('events')
+//         .where({
+//             org_id: orgId,
+//             id: id
+//         })
+//         .first()
+// }
 
+
+// check the route. 
 function create(body) {
-    return db('lists')
+    return db('events')
         .insert(body)
         .returning('*')
         .then(([response]) => response)
 }
 
+
+function find(id) {
+    return db('events')
+    .where({
+        id
+    }).first()
+}
+
+function patch(id, body) {
+    return find(id).then(response => {
+        return db('events')
+            .update({
+                ...response,
+                ...body,
+                updated_at: new Date()
+            })
+            .where({
+                id
+            })
+            .returning('*')
+            .then(([response]) => response)
+    })
+}
+
 function destroy(id) {
-    return db('lists')
+    return db('events')
         .where({
             id
         })
@@ -36,7 +64,8 @@ function destroy(id) {
 
 module.exports = {
     get,
-    find,
+    // getOne,
     create,
+    patch,
     destroy
 }

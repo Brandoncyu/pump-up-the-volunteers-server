@@ -5,6 +5,7 @@ const auth = require('../lib/auth')
 router.get('/', auth.isLoggedIn, ctrl.index)
 // router.getOne('/:id', auth.isLoggedIn, ctrl.getOne)
 router.post('/', auth.isLoggedIn, ctrl.create)
+router.patch('/:id', auth.isAuthorized, ctrl.patch)
 router.delete('/:id', auth.isAuthorized, ctrl.destroy)
 
 module.exports = router
