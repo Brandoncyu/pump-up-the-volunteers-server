@@ -22,10 +22,20 @@ async function index(req, res, next) {
     })
 }
 
+async function getEvents(req, res, next){
+  const volId = req.params.volId
+  const response = await model.getEvents(volId)
+
+  res.json({
+    [plural(resourceName)]: response
+  })
+}
 
 async function createFavorite(req, res, next) {
     try {
+      console.log('newbody', req)
          const response = await model.createFavorite(req.body)
+
         res.status(200).json({
             [resourceName]: response
         })
@@ -57,6 +67,7 @@ async function createFavorite(req, res, next) {
 
 module.exports = {
     index,
-    createFavorite
+    createFavorite,
+    getEvents
     // patch
 }

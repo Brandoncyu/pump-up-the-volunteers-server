@@ -17,49 +17,37 @@ function get(days, categories) {
         })
 }
 
+function getEvents(id){
+    return db('volunteers_events')
+    .where({vol_id: id})
+    .then(response => {
+         return db('volunteers_events')
+            .where({vol_id: id})
+            .then(response => response)
+
+     })
+}
+
 function createFavorite(body) {
+  console.log('body:', body)
     const volunteerId = body.volId
     const theEventId = body.eventId
 
     const bodyInsert = {
-        vol_id: volunteerId,
-        event_id: theEventId,
-        status: body.status
+        vol_id: parseInt(volunteerId),
+        event_id: parseInt(theEventId),
+        status: JSON.parse(body.status)
     }
     return db('volunteers_events')
-        .where({
-            vol_id: `${volunteerId}`,
-            event_id: `${theEventId}`
-        })
-        .then(response => {
-            if (response.length > 0) {
-                // patch 
-                return db('volunteers_events')
-                    .update({
-                        ...bodyInsert
-                    })
-                    .where({
-                        vol_id: `${volunteerId}`,
-                        event_id: `${theEventId}`
-                    })
-                    .returning('*')
-                    .then(([response]) => response)
-            } else {
-                // post
-                return db('volunteers_events')
-                    .insert(bodyInsert)
-                    .returning('*')
-                    .then(([response]) => {
-                        console.log("I am the response in createFravorite in model", response)
-                        return response
-                    })
-            }
-            console.log("Checking the response", response)
-        })
+        .insert(bodyInsert)
+        .returning('*')
+        .then(([response]) => response)
+
 }
 
 
 module.exports = {
     get,
+    getEvents,
     createFavorite
 }
