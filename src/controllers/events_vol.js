@@ -23,8 +23,8 @@ async function index(req, res, next) {
 }
 
 async function patch(req, res, next) {
+    console.log("HELLO, PATCH")
     const id = req.params.id
-    console.log("req.params in patch YY", req.params)
     const response = await model.patch(id, req.body)
     res.json({
         [resourceName]: response
@@ -32,6 +32,6 @@ async function patch(req, res, next) {
 }
 
 module.exports = {
-    index
-
+    index,
+    patch
 }
