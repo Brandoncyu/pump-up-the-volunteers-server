@@ -5,6 +5,14 @@ const bcrypt = require('bcryptjs')
 const userKey = require('./user_key')
 const axios = require('axios')
 
+function getAll() {
+  return db('organizations')
+    .returning('*')
+    .then(response => {
+      return response
+    })
+}
+
 async function create(body) {
   console.log('This is create function');
   console.log(body.ein)
@@ -40,11 +48,11 @@ async function create(body) {
 
 function login({email, password}) {
   return db('organizations').where({email}).then(async ([org]) => {
-    if (!org) 
+    if (!org)
       throw new Error()
 
     const isValid = await promisify(bcrypt.compare)(password, org.password) //hash the password that user puts in, compares with the hased in db
-    if (!isValid) 
+    if (!isValid)
       throw new Error()
 
     return org
@@ -58,6 +66,7 @@ function retrieveId(categoryName) {
 }
 
 module.exports = {
+  getAll,
   create,
   login
 }

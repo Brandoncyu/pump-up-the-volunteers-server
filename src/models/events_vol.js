@@ -13,7 +13,6 @@ function get(days, categories) {
         .whereIn('day', daysArr)
         .returning('*')
         .then(response => {
-            console.log("I am the response", response)
             return response
         })
 }
