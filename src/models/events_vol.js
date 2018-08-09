@@ -18,41 +18,49 @@ function get(days, categories) {
         })
 }
 
-// function findEvent(eventId, body) {
-//     console.log("days", body.days, "categories", body.categories)
+function createFavorite(body) {
+    const volunteerId = body.volId
+    const theEventId = body.eventId
 
-//     return get(body.days, body.categories)
-//         .where({
-//             id: eventId
-//         })
-//         .first()
-// }
-
-// async function patch(eventId, body) {
-//     const response = await findEvent(eventId, body)
-
-//     return db('options')
-//         .join('organizations', 'organizations.option_id', "=", "options.id")
-//         .join('events', 'events.org_id', '=', 'organizations.id')
-//         .join('volunteers_events', 'volunteers_events.event_id', '=', 'events.id')
-//         .whereIn('option_id', body.categories)
-//         .whereIn('day', body.days)
-//         .update({
-//             ...response,
-//             status: body.status,
-//             updated_at: new Date()
-//         })
-//         .where({
-//             id: eventId
-//         })
-//         .returning('*')
-//         .then(([response]) => response)
-
-// }
+    const bodyInsert = {
+        vol_id: volunteerId,
+        event_id: theEventId,
+        status: body.status
+    }
+    return db('volunteers_events')
+        .where({
+            vol_id: `${volunteerId}`,
+            event_id: `${theEventId}`
+        })
+        .then(response => {
+            if (response.length > 0) {
+                // patch 
+                return db('volunteers_events')
+                    .update({
+                        ...bodyInsert
+                    })
+                    .where({
+                        vol_id: `${volunteerId}`,
+                        event_id: `${theEventId}`
+                    })
+                    .returning('*')
+                    .then(([response]) => response)
+            } else {
+                // post
+                return db('volunteers_events')
+                    .insert(bodyInsert)
+                    .returning('*')
+                    .then(([response]) => {
+                        console.log("I am the response in createFravorite in model", response)
+                        return response
+                    })
+            }
+            console.log("Checking the response", response)
+        })
+}
 
 
 module.exports = {
-    get
-    // get,
-    // patch
+    get,
+    createFavorite
 }
