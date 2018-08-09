@@ -16,8 +16,9 @@ async function signup(req, res, next) {
       response.Saturday
     ]
     interests = interestList.map(element => element.option_id)
+    const id = response.id
 
-    res.status(201).json({token, days, interests})
+    res.status(201).json({token, days, interests, id})
   } catch (e) {
     next({status: 400, error: `Volunteer could not be registered`})
   }
@@ -37,9 +38,10 @@ async function login(req, res, next) {
       response.Friday,
       response.Saturday
     ]
+    const id = response.id
     interests = interestList.map(element => element.option_id)
 
-    res.json({token, days, interests})
+    res.json({token, days, interests, id})
   } catch (e) {
     next({status: 401, error: `Email or password is incorrect`})
   }

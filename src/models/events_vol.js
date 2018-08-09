@@ -7,12 +7,11 @@ function get(days, categories) {
     return db('options')
         .join('organizations', 'organizations.option_id', "=", "options.id")
         .join('events', 'events.org_id', '=', 'organizations.id')
-        .join('volunteers_events', 'volunteers_events.event_id', '=', 'events.id')
+        // .join('volunteers_events', 'volunteers_events.event_id', '=', 'events.id')
         .whereIn('option_id', categoriesArr)
         .whereIn('day', daysArr)
         .returning('*')
         .then(response => {
-            console.log("I am the response", response)
             return response
         })
 }
