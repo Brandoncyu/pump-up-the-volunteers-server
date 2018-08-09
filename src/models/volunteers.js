@@ -3,10 +3,6 @@ const {promisify} = require('util')
 const db = require('../db/knex')
 const bcrypt = require('bcryptjs')
 
-// brainstorm:
-// function create add a new volunteer to the volunteer db
-// and populates the volunteers_options table
-
 function popOptions(interests, userId) {
   interests.forEach(el => {
     let option = {
@@ -64,7 +60,12 @@ function login({email, password}) {
   }).catch(console.log)
 }
 
+function interestFinder(vol_id) {
+  return db('volunteers_options').where({vol_id}).then(response => response).catch(console.log)
+}
+
 module.exports = {
   create,
-  login
+  login,
+  interestFinder
 }
