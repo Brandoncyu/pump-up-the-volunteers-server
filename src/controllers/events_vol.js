@@ -14,7 +14,7 @@ async function index(req, res, next) {
     // console.log(token)
     // const volId = token.sub.id
     const days = req.query.days
-    const categories = req.query.vol_opt
+    const categories = req.query.interests
     const response = await model.get(days, categories)
 
     res.json({
