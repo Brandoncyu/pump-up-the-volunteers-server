@@ -38,7 +38,9 @@ async function create(body) {
       option_id: orgId
     }
 
-    return db('organizations').insert(org).returning('*').then(([response]) => {
+    return db('organizations')
+    .insert(org).returning('*')
+    .then(([response]) => {
       return response
     }).catch(console.log)
   }).catch(console.log)

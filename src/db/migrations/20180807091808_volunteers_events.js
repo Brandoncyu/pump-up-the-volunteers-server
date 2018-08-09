@@ -4,7 +4,7 @@ exports.up = knex => {
         table.increments()
         table.integer('vol_id').notNullable().defaultsTo(0)
         table.integer('event_id').notNullable().defaultsTo(0)
-        table.integer('status').notNullable().defaultsTo(1)
+        table.boolean('status').notNullable()
         table.foreign('vol_id').references('volunteers.id').onDelete('CASCADE')
         table.foreign('event_id').references('events.id').onDelete('CASCADE')
     })

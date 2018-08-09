@@ -22,6 +22,22 @@ async function index(req, res, next) {
     })
 }
 
+
+async function createFavorite(req, res, next) {
+    try {
+         const response = await model.createFavorite(req.body)
+        res.status(200).json({
+            [resourceName]: response
+        })
+    } catch (e) {
+        console.log(e)
+        next({
+            status: 400,
+            error: `Event could not be created`
+        })
+    }
+}
+
 // async function patch(req, res, next) {
 //     try {
 //         console.log("HELLO, PATCH")
@@ -40,6 +56,7 @@ async function index(req, res, next) {
 // }
 
 module.exports = {
-    index
+    index,
+    createFavorite
     // patch
 }
