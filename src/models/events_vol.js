@@ -17,7 +17,9 @@ function get(days, categories) {
         })
 }
 
-// function findEvent(body, eventId) {
+// function findEvent(eventId, body) {
+//     console.log("days", body.days, "categories", body.categories)
+
 //     return get(body.days, body.categories)
 //         .where({
 //             id: eventId
@@ -25,34 +27,30 @@ function get(days, categories) {
 //         .first()
 // }
 
-async function patch(eventId, body) {
-    return get(body.days, body.categories)
-        .where({
-            id: eventId
-        })
-        .first()
-        .then(response => {
-            return db('options')
-                .join('organizations', 'organizations.option_id', "=", "options.id")
-                .join('events', 'events.org_id', '=', 'organizations.id')
-                .join('volunteers_events', 'volunteers_events.event_id', '=', 'events.id')
-                .whereIn('option_id', body.categories)
-                .whereIn('day', body.days)
-                .update({
-                    ...response,
-                    status: body.status,
-                    updated_at: new Date()
-                })
-                .where({
-                    id: eventId
-                })
-                .returning('*')
-                .then(([response]) => response)
-        })
-}
+// async function patch(eventId, body) {
+//     const response = await findEvent(eventId, body)
+
+//     return db('options')
+//         .join('organizations', 'organizations.option_id', "=", "options.id")
+//         .join('events', 'events.org_id', '=', 'organizations.id')
+//         .join('volunteers_events', 'volunteers_events.event_id', '=', 'events.id')
+//         .whereIn('option_id', body.categories)
+//         .whereIn('day', body.days)
+//         .update({
+//             ...response,
+//             status: body.status,
+//             updated_at: new Date()
+//         })
+//         .where({
+//             id: eventId
+//         })
+//         .returning('*')
+//         .then(([response]) => response)
+
+// }
 
 
 module.exports = {
-    get,
-    patch
+    get
+    // patch
 }

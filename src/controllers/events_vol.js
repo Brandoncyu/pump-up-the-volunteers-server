@@ -22,16 +22,24 @@ async function index(req, res, next) {
     })
 }
 
-async function patch(req, res, next) {
-    console.log("HELLO, PATCH")
-    const id = req.params.id
-    const response = await model.patch(id, req.body)
-    res.json({
-        [resourceName]: response
-    })
-}
+// async function patch(req, res, next) {
+//     try {
+//         console.log("HELLO, PATCH")
+//         const id = req.params.id
+//         const response = await model.patch(id, req.body)
+//         res.json({
+//             [resourceName]: response
+//         })
+//     } catch (e) {
+//         console.log(e)
+//         next({
+//             status: 400,
+//             error: `Event could not be created`
+//         })
+//     }
+// }
 
 module.exports = {
-    index,
-    patch
+    index
+    // patch
 }
