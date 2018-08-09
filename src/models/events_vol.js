@@ -3,11 +3,12 @@ const db = require('../db/knex')
 function get(days, categories) {
     const daysArr = JSON.parse(days)
     const categoriesArr = JSON.parse(categories)
+    console.log(categoriesArr, "I am categoriesArr")
 
     return db('options')
         .join('organizations', 'organizations.option_id', "=", "options.id")
         .join('events', 'events.org_id', '=', 'organizations.id')
-        .join('volunteers_events', 'volunteers_events.event_id', '=', 'events.id')
+        // .join('volunteers_events', 'volunteers_events.event_id', '=', 'events.id')
         .whereIn('option_id', categoriesArr)
         .whereIn('day', daysArr)
         .returning('*')
@@ -52,5 +53,6 @@ function get(days, categories) {
 
 module.exports = {
     get
+    // get,
     // patch
 }
