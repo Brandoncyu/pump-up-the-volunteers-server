@@ -1,13 +1,9 @@
 const db = require('../db/knex')
 
 function get(orgId) {
-    return db('events')
-        .where({
-            org_id: orgId
-        })
-        .then(events => {
-            return events
-        })
+  return db('events').where({org_id: orgId}).then(events => {
+    return events
+  })
 }
 
 // function getOne(orgId, id) {
@@ -19,100 +15,76 @@ function get(orgId) {
 //         .first()
 // }
 
-
-// check the route. 
-
+// check the route.
 
 function dateObj(n) {
-    let
-        parts = n.split('-'),
-        year = parseInt(parts[2], 10),
-        month = parseInt(parts[0], 10) - 1, // NB: month is zero-based!
-        day = parseInt(parts[1], 10),
-        date = new Date(year, month, day);
+  let parts = n.split('-'),
+    year = parseInt(parts[0], 10),
+    month = parseInt(parts[1], 10) - 1, // NB: month is zero-based!
+    day = parseInt(parts[2], 10),
+    date = new Date(year, month, day);
 
-    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  var days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
 
-    const result = days[date.getDay()]
-    let daysObj = {}
-    daysObj[result] = true
-    const notSelected = days.filter(el => el !== result)
-    notSelected.forEach(el => {
-        daysObj[el] = false
-    })
-    console.log(daysObj)
-    return daysObj
+  const result = days[date.getDay()]
+  let daysObj = {
+    day: result
+  }
+
+  return daysObj
 }
 
 function create(body) {
-    const date = body.date
-    console.log(date)
-    const bodyInsert = {
-        ...body,
-        ...dateObj(date)
-    }
-    console.log(bodyInsert)
-    return db('events')
-        .insert(bodyInsert)
-        .returning('*')
-        .then(([response]) => response)
+  const date = body.date
+  console.log(date)
+  const bodyInsert = {
+    ...body,
+    ...dateObj(date)
+  }
+  // console.log(bodyInsert)
+  return db('events').insert(bodyInsert).returning('*').then(([response]) => response)
 }
 
-
 function find(id) {
-    return db('events')
-        .where({
-            id
-        }).first()
+  return db('events').where({id}).first()
 }
 
 function patch(id, body) {
-    return find(id).then(response => {
-        if (body.date) {
-            const date = body.date
-            return db('events')
-                .update({
-                    ...response,
-                    ...body,
-                    ...dateObj(date),
-                    updated_at: new Date()
-                })
-                .where({
-                    id
-                })
-                .returning('*')
-                .then(([response]) => response)
-        } else {
-            return db('events')
-                .update({
-                    ...response,
-                    ...body,
-                    updated_at: new Date()
-                })
-                .where({
-                    id
-                })
-                .returning('*')
-                .then(([response]) => response)
-        }
-    })
+  return find(id).then(response => {
+    if (body.date) {
+      const date = body.date
+      return db('events').update({
+        ...response,
+        ...body,
+        ...dateObj(date),
+        updated_at: new Date()
+      }).where({id}).returning('*').then(([response]) => response)
+    } else {
+      return db('events').update({
+        ...response,
+        ...body,
+        updated_at: new Date()
+      }).where({id}).returning('*').then(([response]) => response)
+    }
+  })
 }
 
 function destroy(id) {
-    return db('events')
-        .where({
-            id
-        })
-        .del()
-        .returning('*')
-        .then(([response]) => response)
+  return db('events').where({id}).del().returning('*').then(([response]) => response)
 }
 
 module.exports = {
-    get,
-    // getOne,
-    create,
-    patch,
-    destroy
+  get,
+  // getOne,
+  create,
+  patch,
+  destroy
 }
-
