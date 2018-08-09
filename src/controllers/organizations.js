@@ -1,6 +1,11 @@
 const model = require('../models/organizations')
 const auth = require('../lib/auth')
 
+async function getAll(req, res, next){
+  let data = await model.getAll()
+  res.send({data})
+}
+
 async function signup(req, res, next) {
   console.log("this is signup inside controller")
   try {
@@ -61,6 +66,7 @@ async function login(req, res, next) {
 }
 
 module.exports = {
+  getAll,
   signup,
   login
 }
