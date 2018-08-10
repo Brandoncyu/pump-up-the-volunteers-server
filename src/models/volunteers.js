@@ -9,16 +9,13 @@ function popOptions(interests, userId) {
       vol_id: userId,
       option_id: el
     }
-    console.log("I am the option", option)
     return db('volunteers_options').insert(option).returning('*').then(([response]) => {
-      console.log("Response inside popOptions function", response)
       return response
     }).catch(console.log)
   })
 }
 
 async function create(body) {
-  console.log('This is create function for volunteers');
   const hashed = await promisify(bcrypt.hash)(body.password, 8)
 
   const vol = {
@@ -39,7 +36,6 @@ async function create(body) {
     Saturday: body.days[6]
   }
   return db('volunteers').insert(vol).returning('*').then(([response]) => {
-    console.log("Response inside create function", response)
     const userId = response.id
     const interests = body.interests
     popOptions(interests, userId)
@@ -49,11 +45,11 @@ async function create(body) {
 
 function login({email, password}) {
   return db('volunteers').where({email}).then(async ([vol]) => {
-    if (!vol) 
+    if (!vol)
       throw new Error()
 
     const isValid = await promisify(bcrypt.compare)(password, vol.password) //hash the password that user puts in, compares with the hased in db
-    if (!isValid) 
+    if (!isValid)
       throw new Error()
 
     return vol

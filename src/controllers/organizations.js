@@ -7,7 +7,6 @@ async function getAll(req, res, next){
 }
 
 async function signup(req, res, next) {
-  console.log("this is signup inside controller")
   try {
     const response = await model.create(req.body)
     const token = auth.createToken(response.id)

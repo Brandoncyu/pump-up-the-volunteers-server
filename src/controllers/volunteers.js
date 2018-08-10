@@ -18,7 +18,7 @@ async function signup(req, res, next) {
     interests = interestList.map(element => element.option_id)
     const id = response.id
 
-    res.status(201).json({token, days, interests})
+    res.status(201).json({token, days, interests, id})
   } catch (e) {
     next({status: 400, error: `Volunteer could not be registered`})
   }

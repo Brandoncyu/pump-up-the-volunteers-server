@@ -8,17 +8,6 @@ function get(orgId) {
   })
 }
 
-// function getOne(orgId, id) {
-//     return db('events')
-//         .where({
-//             org_id: orgId,
-//             id: id
-//         })
-//         .first()
-// }
-
-// check the route.
-
 function dateObj(weekDay) {
   let parts = weekDay.split('-'),
     year = parseInt(parts[0], 10),
@@ -51,7 +40,6 @@ function create(body) {
     ...body,
     ...dateObj(date)
   }
-  // console.log(bodyInsert)
   return db('events')
     .insert(bodyInsert)
     .returning('*')
@@ -98,7 +86,6 @@ function destroy(id) {
 
 module.exports = {
   get,
-  // getOne,
   create,
   patch,
   destroy

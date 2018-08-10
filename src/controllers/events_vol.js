@@ -11,8 +11,6 @@ const resourceName = 'event'
 
 async function index(req, res, next) {
     const token = parseToken(req.headers.authorization)
-    // console.log(token)
-    // const volId = token.sub.id
     const days = req.query.days
     const categories = req.query.interests
     const response = await model.get(days, categories)
@@ -33,7 +31,6 @@ async function getEvents(req, res, next){
 
 async function createFavorite(req, res, next) {
     try {
-      console.log('newbody', req)
          const response = await model.createFavorite(req.body)
 
         res.status(200).json({

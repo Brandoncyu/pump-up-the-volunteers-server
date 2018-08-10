@@ -14,10 +14,7 @@ function getAll() {
 }
 
 async function create(body) {
-  console.log('This is create function');
-  console.log(body.ein)
   return axios.post(`http://data.orghunter.com/v1/charitygeolocation?user_key=${userKey}&ein=${body.ein}`).then(async (res) => {
-    console.log('meeee');
     const hashed = await promisify(bcrypt.hash)(body.password, 8)
     const data = res.data.data
     const categoryName = data.nteeType
