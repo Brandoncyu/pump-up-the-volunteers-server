@@ -10,12 +10,12 @@ function popOptions(interests, userId) {
       option_id: el
     }
     return db('volunteers_options')
-    .insert(option)
-    .returning('*')
-    .then(([response]) => {
-      return response
-    })
-    .catch(console.log)
+      .insert(option)
+      .returning('*')
+      .then(([response]) => {
+        return response
+      })
+      .catch(console.log)
   })
 }
 
@@ -40,33 +40,37 @@ async function create(body) {
     Saturday: body.days[6]
   }
   return db('volunteers')
-  .insert(vol)
-  .returning('*')
-  .then(([response]) => {
-    const userId = response.id
-    const interests = body.interests
-    popOptions(interests, userId)
-    return response
-  })
-  .catch(console.log)
+    .insert(vol)
+    .returning('*')
+    .then(([response]) => {
+      const userId = response.id
+      const interests = body.interests
+      popOptions(interests, userId)
+      return response
+    })
+    .catch(console.log)
 }
 
 function login({email, password}) {
   return db('volunteers')
-  .where({email}).then(async ([vol]) => {
-    if (!vol)
-      throw new Error()
+    .where({email})
+    .then(async ([vol]) => {
+      if (!vol)
+        throw new Error()
 
-    const isValid = await promisify(bcrypt.compare)(password, vol.password) //hash the password that user puts in, compares with the hased in db
-    if (!isValid)
-      throw new Error()
+      const isValid = await promisify(bcrypt.compare)(password, vol.password)
+      if (!isValid)
+        throw new Error()
 
-    return vol
-  }).catch(console.log)
+      return vol
+    }).catch(console.log)
 }
 
 function interestFinder(vol_id) {
-  return db('volunteers_options').where({vol_id}).then(response => response).catch(console.log)
+  return db('volunteers_options')
+    .where({vol_id})
+    .then(response => response)
+    .catch(console.log)
 }
 
 module.exports = {

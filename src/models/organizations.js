@@ -36,30 +36,40 @@ async function create(body) {
     }
 
     return db('organizations')
-    .insert(org).returning('*')
-    .then(([response]) => {
-      return response
-    }).catch(console.log)
-  }).catch(console.log)
+      .insert(org)
+      .returning('*')
+      .then(([response]) => {
+        return response
+      })
+      .catch(console.log)
+  })
+  .catch(console.log)
 }
 
 function login({email, password}) {
-  return db('organizations').where({email}).then(async ([org]) => {
-    if (!org)
-      throw new Error()
+  return db('organizations')
+    .where({email})
+    .then(async ([org]) => {
+      if (!org)
+        throw new Error()
 
-    const isValid = await promisify(bcrypt.compare)(password, org.password) 
-    if (!isValid)
-      throw new Error()
+      const isValid = await promisify(bcrypt.compare)(password, org.password)
+      if (!isValid)
+        throw new Error()
 
-    return org
-  }).catch(console.log)
+      return org
+    })
+    .catch(console.log)
 }
 
 function retrieveId(categoryName) {
-  return db('options').where({name: categoryName}).first().then(response => {
-    return response.id
-  }).catch(error => console.log('Category Not Found'))
+  return db('options')
+    .where({name: categoryName})
+    .first()
+    .then(response => {
+      return response.id
+    })
+    .catch(error => console.log('Category Not Found'))
 }
 
 module.exports = {
