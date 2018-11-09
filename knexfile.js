@@ -1,6 +1,6 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').load()
 const { DATABASE_URL, NODE_ENV } = process.env
-
+//sets connection to database.
 const path = require('path')
 const config = {
   client: 'pg',

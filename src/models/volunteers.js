@@ -9,9 +9,13 @@ function popOptions(interests, userId) {
       vol_id: userId,
       option_id: el
     }
-    return db('volunteers_options').insert(option).returning('*').then(([response]) => {
+    return db('volunteers_options')
+    .insert(option)
+    .returning('*')
+    .then(([response]) => {
       return response
-    }).catch(console.log)
+    })
+    .catch(console.log)
   })
 }
 
@@ -35,16 +39,21 @@ async function create(body) {
     Friday: body.days[5],
     Saturday: body.days[6]
   }
-  return db('volunteers').insert(vol).returning('*').then(([response]) => {
+  return db('volunteers')
+  .insert(vol)
+  .returning('*')
+  .then(([response]) => {
     const userId = response.id
     const interests = body.interests
     popOptions(interests, userId)
     return response
-  }).catch(console.log)
+  })
+  .catch(console.log)
 }
 
 function login({email, password}) {
-  return db('volunteers').where({email}).then(async ([vol]) => {
+  return db('volunteers')
+  .where({email}).then(async ([vol]) => {
     if (!vol)
       throw new Error()
 

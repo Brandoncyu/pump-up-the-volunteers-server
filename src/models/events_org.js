@@ -35,7 +35,6 @@ function dateObj(weekDay) {
 
 function create(body) {
   const date = body.date
-  console.log(date)
   const bodyInsert = {
     ...body,
     ...dateObj(date)
@@ -47,9 +46,9 @@ function create(body) {
 }
 
 function find(id) {
-  return db('events').where({
-    id
-  }).first()
+  return db('events')
+    .where({id})
+    .first()
 }
 
 function patch(id, body) {
@@ -62,26 +61,30 @@ function patch(id, body) {
           ...body,
           ...dateObj(date),
           updated_at: new Date()
-        }).where({
-          id
-        }).returning('*').then(([response]) => response)
+        })
+          .where({id})
+          .returning('*')
+          .then(([response]) => response)
     } else {
       return db('events')
         .update({
           ...response,
           ...body,
           updated_at: new Date()
-        }).where({
-          id
-        }).returning('*').then(([response]) => response)
+        })
+        .where({id})
+        .returning('*')
+        .then(([response]) => response)
     }
   })
 }
 
 function destroy(id) {
-  return db('events').where({
-    id
-  }).del().returning('*').then(([response]) => response)
+  return db('events')
+    .where({id})
+    .del()
+    .returning('*')
+    .then(([response]) => response)
 }
 
 module.exports = {

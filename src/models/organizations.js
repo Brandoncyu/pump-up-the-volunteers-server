@@ -48,7 +48,7 @@ function login({email, password}) {
     if (!org)
       throw new Error()
 
-    const isValid = await promisify(bcrypt.compare)(password, org.password) //hash the password that user puts in, compares with the hased in db
+    const isValid = await promisify(bcrypt.compare)(password, org.password) 
     if (!isValid)
       throw new Error()
 
